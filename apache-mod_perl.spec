@@ -89,6 +89,7 @@ Requires:	apache-base >= %{apache_version}
 Requires:	apache-modules >= %{apache_version}
 BuildRequires:	apache-devel >= %{apache_version}
 Epoch:		1
+BuildRoot:	%{_tmppath}/%{name}-buildroot
 
 %description
 %{name} incorporates a Perl interpreter into the apache web server,
