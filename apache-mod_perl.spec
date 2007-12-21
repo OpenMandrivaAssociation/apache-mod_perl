@@ -41,7 +41,7 @@
 Summary:	An embedded Perl interpreter for the apache Web server
 Name:		apache-%{mod_name}
 Version:	2.0.3
-Release:	%mkrel 8
+Release:	%mkrel 9
 Group:		System/Servers
 License:	Apache License
 URL:		http://perl.apache.org/
@@ -113,9 +113,7 @@ Summary:	Files needed for building XS modules that use mod_perl
 Group:		Development/C
 Requires:	%{name} = 1:%{version}
 Requires:	apache-devel >= %{apache_version}
-Provides:	apache2-mod_perl-devel
 Epoch:		1
-Obsoletes:	apache2-mod_perl-devel
 
 %description	devel 
 The mod_perl-devel package contains the files needed for building XS
