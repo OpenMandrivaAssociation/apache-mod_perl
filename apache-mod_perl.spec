@@ -40,17 +40,17 @@
 
 Summary:	An embedded Perl interpreter for the apache Web server
 Name:		apache-%{mod_name}
-Version:	2.0.3
-Release:	%mkrel 11
+Version:	2.0.4
+Release:	%mkrel 0.r612173.1
 Group:		System/Servers
 License:	Apache License
 URL:		http://perl.apache.org/
-Source0:	http://perl.apache.org/dist/%{mod_name}-%{version}.tar.gz
-Source1:	http://perl.apache.org/dist/%{mod_name}-%{version}.tar.gz.asc
+#Source0:	http://perl.apache.org/dist/%{mod_name}-%{version}.tar.gz
+#Source1:	http://perl.apache.org/dist/%{mod_name}-%{version}.tar.gz.asc
+Source0:	http://perl.apache.org/dist/%{mod_name}-2.0.tar.gz
 Source2:	%{mod_conf}
 Source3:	apache-mod_perl-testscript.pl
 Patch0:		mod_perl-external_perl-apache-test.diff
-Patch1:		apache-mod_perl-2.x-CVE-2007-1349.patch
 Requires:       perl = %{perl_version}
 BuildRequires:	perl-devel >= 5.8.2
 BuildRequires:	perl-Apache-Test >= 1.29
@@ -121,9 +121,8 @@ modules that use mod_perl.
 
 %prep
 
-%setup -q -n %{mod_name}-%{version}
+%setup -q -n %{mod_name}-2.0
 %patch0 -p1
-%patch1 -p3 -b .cve-2007-1349
 rm -rf Apache-Test
 
 cp %{SOURCE2} %{mod_conf}
