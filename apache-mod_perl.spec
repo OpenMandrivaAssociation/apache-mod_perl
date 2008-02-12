@@ -41,7 +41,7 @@
 Summary:	An embedded Perl interpreter for the apache Web server
 Name:		apache-%{mod_name}
 Version:	2.0.4
-Release:	%mkrel 0.r612173.1
+Release:	%mkrel 0.r620824.1
 Group:		System/Servers
 License:	Apache License
 URL:		http://perl.apache.org/
@@ -126,6 +126,10 @@ modules that use mod_perl.
 rm -rf Apache-Test
 
 cp %{SOURCE2} %{mod_conf}
+
+for i in `find . -type d -name .svn`; do
+    if [ -e "$i" ]; then rm -rf $i; fi >&/dev/null
+done
 
 %build
 
