@@ -32,7 +32,7 @@
 %define _requires_exceptions perl(Data::Flow)\\|perl(Carp::Heavy)\\|perl(Apache::FunctionTable)\\|perl(Apache::StructureTable)\\|perl(Data::Flow)\\|perl(Module::Build)\\|perl(Apache::TestConfigParse)\\|perl(Apache::TestConfigPerl)
 
 #Module-Specific definitions
-%define apache_version 2.2.4
+%define apache_version 2.2.8
 %define mod_name mod_perl
 %define mod_conf 75_%{mod_name}.conf
 %define mod_so %{mod_name}.so
@@ -41,13 +41,12 @@
 Summary:	An embedded Perl interpreter for the apache Web server
 Name:		apache-%{mod_name}
 Version:	2.0.4
-Release:	%mkrel 0.r634243.2
+Release:	%mkrel 0.1
 Group:		System/Servers
 License:	Apache License
 URL:		http://perl.apache.org/
-#Source0:	http://perl.apache.org/dist/%{mod_name}-%{version}.tar.gz
-#Source1:	http://perl.apache.org/dist/%{mod_name}-%{version}.tar.gz.asc
-Source0:	http://perl.apache.org/dist/%{mod_name}-2.0.tar.gz
+Source0:	http://perl.apache.org/dist/%{mod_name}-%{version}.tar.gz
+Source1:	http://perl.apache.org/dist/%{mod_name}-%{version}.tar.gz.asc
 Source2:	%{mod_conf}
 Source3:	apache-mod_perl-testscript.pl
 Patch0:		mod_perl-external_perl-apache-test.diff
@@ -89,7 +88,7 @@ Requires:	apache-base >= %{apache_version}
 Requires:	apache-modules >= %{apache_version}
 BuildRequires:	apache-devel >= %{apache_version}
 Epoch:		1
-BuildRoot:	%{_tmppath}/%{name}-buildroot
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 %{name} incorporates a Perl interpreter into the apache web server,
@@ -121,7 +120,7 @@ modules that use mod_perl.
 
 %prep
 
-%setup -q -n %{mod_name}-2.0
+%setup -q -n %{mod_name}-%{version}
 %patch0 -p1
 rm -rf Apache-Test
 
