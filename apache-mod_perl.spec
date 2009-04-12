@@ -41,7 +41,7 @@
 Summary:	An embedded Perl interpreter for the apache Web server
 Name:		apache-%{mod_name}
 Version:	2.0.4
-Release:	%mkrel 4
+Release:	%mkrel 5
 Group:		System/Servers
 License:	Apache License
 URL:		http://perl.apache.org/
@@ -52,6 +52,7 @@ Source3:	apache-mod_perl-testscript.pl
 Patch0:		mod_perl-external_perl-apache-test.diff
 Patch1:         mod_perl-2.0.4-inline.patch
 Patch2:		mod_perl-format-string.patch
+Patch3:		mod_perl-2.0.x-CVE-2009-0796.diff
 Requires:       perl = %{perl_version}
 BuildRequires:	perl-devel >= 5.8.2
 BuildRequires:	perl-Apache-Test >= 1.29
@@ -126,6 +127,8 @@ modules that use mod_perl.
 %patch0 -p1
 %patch1 -p1 -b .inline
 %patch2 -p1
+%patch3 -p0
+
 rm -rf Apache-Test
 
 cp %{SOURCE2} %{mod_conf}
