@@ -41,7 +41,7 @@
 Summary:	An embedded Perl interpreter for the apache Web server
 Name:		apache-%{mod_name}
 Version:	2.0.4
-Release:	%mkrel 8
+Release:	%mkrel 9
 Group:		System/Servers
 License:	Apache License
 URL:		http://perl.apache.org/
@@ -89,6 +89,7 @@ Requires:	apache-conf >= %{apache_version}
 Requires:	apache-mpm-prefork >= %{apache_version}
 Requires:	apache-base >= %{apache_version}
 Requires:	apache-modules >= %{apache_version}
+Requires:	perl(Apache2::Reload)
 BuildRequires:	apache-devel >= %{apache_version}
 Epoch:		1
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
