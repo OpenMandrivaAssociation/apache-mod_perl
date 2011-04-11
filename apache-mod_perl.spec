@@ -41,7 +41,7 @@
 Summary:	An embedded Perl interpreter for the apache Web server
 Name:		apache-%{mod_name}
 Version:	2.0.4
-Release:	%mkrel 20
+Release:	%mkrel 21
 Group:		System/Servers
 License:	Apache License
 URL:		http://perl.apache.org/
