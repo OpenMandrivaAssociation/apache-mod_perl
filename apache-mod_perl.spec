@@ -144,9 +144,9 @@ done
 %if %{build_debug}
     MP_MAINTAINER=1 \
     MP_TRACE=1 \
-    MP_CCOPTS="$(%{_sbindir}/apxs -q CFLAGS) -g3 -Werror -fPIC" \
+    MP_CCOPTS="$(%{_sbindir}/apxs -q CFLAGS|sed -e 's/-fPIE//') -g3 -Werror -fPIC" \
 %else
-    MP_CCOPTS="$(%{_sbindir}/apxs -q CFLAGS) -fPIC" \
+    MP_CCOPTS="$(%{_sbindir}/apxs -q CFLAGS|sed -e 's/-fPIE//') -fPIC" \
 %endif
     MP_APXS=%{_sbindir}/apxs \
     MP_APR_CONFIG=%{_bindir}/apr-1-config \
