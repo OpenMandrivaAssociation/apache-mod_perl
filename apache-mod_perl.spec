@@ -32,22 +32,21 @@
 %define _requires_exceptions perl(Data::Flow)\\|perl(Carp::Heavy)\\|perl(Apache::FunctionTable)\\|perl(Apache::StructureTable)\\|perl(Data::Flow)\\|perl(Module::Build)\\|perl(Apache::TestConfigParse)\\|perl(Apache::TestConfigPerl)
 
 #Module-Specific definitions
-%define apache_version 2.2.0
+%define apache_version 2.4.0
 %define mod_name mod_perl
-%define mod_conf 75_%{mod_name}.conf
-%define mod_so %{mod_name}.so
+%define load_order 175
 %define perl_version %(rpm -q --qf '%%{epoch}:%%{version}' perl)
 
 Summary:	An embedded Perl interpreter for the apache Web server
 Name:		apache-%{mod_name}
 Version:	2.0.5
-Release:	4
+Release:	5
 Group:		System/Servers
 License:	Apache License
 URL:		http://perl.apache.org/
 Source0:	http://perl.apache.org/dist/%{mod_name}-%{version}.tar.gz
 Source1:	http://perl.apache.org/dist/%{mod_name}-%{version}.tar.gz.asc
-Source2:	%{mod_conf}
+Source2:	mod_perl.conf
 Source3:	apache-mod_perl-testscript.pl
 Patch0:		mod_perl-external_perl-apache-test.diff
 Patch1:         mod_perl-2.0.4-inline.patch
@@ -62,7 +61,6 @@ BuildRequires:	perl-libwww-perl
 BuildRequires:	perl-Tie-IxHash
 BuildRequires:	perl-URI
 BuildRequires:	perl-BSD-Resource
-BuildRequires:	apache-conf >= %{apache_version}
 BuildRequires:	apache-mpm-prefork >= %{apache_version}
 BuildRequires:	apache-base >= %{apache_version}
 BuildRequires:	apache-modules >= %{apache_version}
@@ -72,7 +70,6 @@ BuildRequires:	apache-mod_deflate >= %{apache_version}
 BuildRequires:	apache-mod_disk_cache >= %{apache_version}
 BuildRequires:	apache-mod_file_cache >= %{apache_version}
 BuildRequires:	apache-mod_ldap >= %{apache_version}
-BuildRequires:	apache-mod_mem_cache >= %{apache_version}
 BuildRequires:	apache-mod_proxy >= %{apache_version}
 BuildRequires:	apache-mod_ssl >= %{apache_version}
 BuildRequires:	apache-mod_suexec >= %{apache_version}
@@ -80,19 +77,16 @@ BuildRequires:	apache-mod_userdir >= %{apache_version}
 %endif
 Requires(pre): rpm-helper
 Requires(postun): rpm-helper
-Requires(pre):  apache-conf >= %{apache_version}
 Requires(pre):  apache-mpm-prefork >= %{apache_version}
 Requires(pre):  apache-base >= %{apache_version}
 Requires(pre):  apache-modules >= %{apache_version}
-Requires:	apache-conf >= %{apache_version}
 Requires:	apache-mpm-prefork >= %{apache_version}
 Requires:	apache-base >= %{apache_version}
 Requires:	apache-modules >= %{apache_version}
 Requires:	perl(Apache2::Reload)
 BuildRequires:	apache-devel >= %{apache_version}
-Obsoletes:		perl-Apache-Reload
+Obsoletes:	perl-Apache-Reload
 Epoch:		1
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 %{name} incorporates a Perl interpreter into the apache web server,
@@ -131,7 +125,8 @@ modules that use mod_perl.
 
 rm -rf Apache-Test
 
-cp %{SOURCE2} %{mod_conf}
+cp %{SOURCE2} .
+perl -pi -e "s|_MODULE_DIR_|%{_libdir}/apache|g" mod_perl.conf
 
 for i in `find . -type d -name .svn`; do
     if [ -e "$i" ]; then rm -rf $i; fi >&/dev/null
@@ -162,7 +157,6 @@ mv t/htdocs/includes-registry/cgipm.pl t/htdocs/includes-registry/cgipm.shtml
 sed 's/\.pl/.shtml/' t/htdocs/includes/test.shtml > tmpfile && mv tmpfile t/htdocs/includes/test.shtml
 
 %install
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 
 %if %{build_debug}
 export DONT_STRIP=1
@@ -218,17 +212,16 @@ perl t/TEST -stop-httpd
 %endif
 
 # make some directories
-install -d %{buildroot}%{_libdir}/apache-extramodules
+install -d %{buildroot}%{_libdir}/apache
 install -d %{buildroot}%{_sysconfdir}/httpd/modules.d
-#install -d %{buildroot}%{_sysconfdir}/httpd/conf/addon-modules
 install -d %{buildroot}%{_var}/www/perl
 
 %makeinstall_std \
-    MODPERL_AP_LIBEXECDIR=%{_libdir}/apache-extramodules \
+    MODPERL_AP_LIBEXECDIR=%{_libdir}/apache \
     MODPERL_AP_INCLUDEDIR=%{_includedir}/apache \
     INSTALLDIRS=vendor
 
-install -m0644 %{mod_conf} %{buildroot}%{_sysconfdir}/httpd/modules.d/%{mod_conf}
+install -m0644 mod_perl.conf %{buildroot}%{_sysconfdir}/httpd/modules.d/%{load_order}_%{mod_name}.conf
 
 # Remove empty file
 rm -f docs/api/mod_perl-2.0/pm_to_blib
@@ -250,34 +243,25 @@ rm -f %{buildroot}%{perl_vendorlib}/Bundle/ApacheTest.pm
 rm -f %{buildroot}%{_mandir}/man3/Apache::Test*
 rm -f %{buildroot}%{_mandir}/man3/Bundle::ApacheTest.3pm
 
-# do not ship the patch backups                                                 
+# do not ship the patch backups
 find %{buildroot}%{perl_vendorlib} -name '*.pm.cve*' | xargs rm -f
 
 %post
-if [ -f %{_var}/lock/subsys/httpd ]; then
-    %{_initrddir}/httpd restart 1>&2;
-fi
+/bin/systemctl daemon-reload >/dev/null 2>&1 || :
 
 %postun
 if [ "$1" = "0" ]; then
-    if [ -f %{_var}/lock/subsys/httpd ]; then
-        %{_initrddir}/httpd restart 1>&2
-    fi
+    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
 fi
 
-%clean
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
-
 %files -n %{name}
-%defattr(-,root,root)
 %doc Changes INSTALL LICENSE README docs todo
-%attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/modules.d/%{mod_conf}
-%attr(0755,root,root) %{_libdir}/apache-extramodules/%{mod_so}
+%attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/modules.d/*.conf
+%attr(0755,root,root) %{_libdir}/apache/*.so
 %{perl_vendorlib}
 %{_mandir}/*/*
 %attr(0755,root,root) %{_var}/www/perl/*.pl
 
 %files devel
-%defattr(-,root,root)
 %attr(0755,root,root) %{_bindir}/*
 %{_includedir}/apache/*
