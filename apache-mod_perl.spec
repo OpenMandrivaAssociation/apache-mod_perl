@@ -40,7 +40,7 @@
 Summary:	An embedded Perl interpreter for the apache Web server
 Name:		apache-%{mod_name}
 Version:	2.0.5
-Release:	5
+Release:	6
 Group:		System/Servers
 License:	Apache License
 URL:		http://perl.apache.org/
