@@ -141,7 +141,7 @@ done
 %else
     MP_CCOPTS="$(%{_bindir}/apxs -q CFLAGS|sed -e 's/-fPIE//') -fPIC" \
 %endif
-    MP_APXS=%{_sbindir}/apxs \
+    MP_APXS=%{_bindir}/apxs \
     MP_APR_CONFIG=%{_bindir}/apr-1-config \
     INSTALLDIRS=vendor </dev/null 
 
