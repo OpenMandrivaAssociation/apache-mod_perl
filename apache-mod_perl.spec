@@ -51,14 +51,16 @@ Source3:	apache-mod_perl-testscript.pl
 Patch0:		mod_perl-external_perl-apache-test.diff
 Patch1:         mod_perl-2.0.4-inline.patch
 Patch2:		mod_perl-2.0.6-httpd24.patch
+Patch3:		mod_perl-2.0.6-optincnoexec.patch
 Requires:       perl = %{perl_version}
 BuildRequires:	perl-devel >= 5.8.2
 BuildRequires:	perl-Apache-Test >= 1.29
+BuildRequires:  perl-Tie-IxHash
+BuildRequires:	perl-Data-Flow
 %if %{build_test}
 BuildRequires:	perl-CGI >= 1:3.08
 BuildRequires:	perl-HTML-Parser
 BuildRequires:	perl-libwww-perl
-BuildRequires:	perl-Tie-IxHash
 BuildRequires:	perl-URI
 BuildRequires:	perl-BSD-Resource
 BuildRequires:	apache-mpm-prefork >= %{apache_version}
@@ -122,6 +124,7 @@ modules that use mod_perl.
 %patch0 -p1
 %patch1 -p1 -b .inline
 %patch2 -p1 -b .httpd24
+%patch3 -p0 -b .optincnoexec
 
 rm -rf Apache-Test
 
@@ -135,6 +138,14 @@ done
 %build
 
 # Compile the module.
+
+%{__perl} Makefile.PL \
+    MP_APXS=%{_bindir}/apxs \
+    MP_APR_CONFIG=%{_bindir}/apr-1-config
+
+%make source_scan
+%make xs_generate
+
 %{__perl} Makefile.PL \
 %if %{build_debug}
     MP_MAINTAINER=1 \
@@ -148,7 +159,6 @@ done
     INSTALLDIRS=vendor </dev/null 
 
 ln -s Apache-mod_perl_guide-1.29/bin bin
-
 %make
 
 # XXX mod_include/SSI does not include files when they are not named .shtml
