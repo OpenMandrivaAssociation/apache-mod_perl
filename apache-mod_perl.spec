@@ -48,13 +48,11 @@ Source0:	http://perl.apache.org/dist/%{mod_name}-%{version}.tar.gz
 Source1:	http://perl.apache.org/dist/%{mod_name}-%{version}.tar.gz.asc
 Source2:	mod_perl.conf
 Source3:	apache-mod_perl-testscript.pl
-Patch0:		mod_perl-external_perl-apache-test.diff
 Patch1:         mod_perl-2.0.4-inline.patch
 Patch2:		mod_perl-2.0.6-httpd24.patch
 Patch3:		mod_perl-2.0.6-optincnoexec.patch
 Requires:       perl = %{perl_version}
 BuildRequires:	perl-devel >= 5.8.2
-BuildRequires:	perl-Apache-Test >= 1.29
 BuildRequires:  perl-Tie-IxHash
 BuildRequires:	perl-Data-Flow
 %if %{build_test}
@@ -121,12 +119,9 @@ modules that use mod_perl.
 %prep
 
 %setup -q -n %{mod_name}-%{version}
-%patch0 -p1
 %patch1 -p1 -b .inline
 %patch2 -p1 -b .httpd24
 %patch3 -p0 -b .optincnoexec
-
-rm -rf Apache-Test
 
 cp %{SOURCE2} .
 perl -pi -e "s|_MODULE_DIR_|%{_libdir}/apache|g" mod_perl.conf
@@ -248,8 +243,8 @@ install -m0644 xs/tables/current/Apache2/StructureTable.pm %{buildroot}%{perl_ve
 find %{buildroot}%{perl_archlib} -name perllocal.pod | xargs rm -f
 
 # don't pack the Apache-Test stuff
-rm -rf %{buildroot}%{perl_vendorlib}/Apache
-rm -f %{buildroot}%{perl_vendorlib}/Bundle/ApacheTest.pm
+rm -rf %{buildroot}%{perl_vendorarch}/Apache
+rm -f %{buildroot}%{perl_vendorarch}/Bundle/ApacheTest.pm
 rm -f %{buildroot}%{_mandir}/man3/Apache::Test*
 rm -f %{buildroot}%{_mandir}/man3/Bundle::ApacheTest.3pm
 
