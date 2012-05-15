@@ -29,7 +29,7 @@
 %define build_debug 1
 %endif
 
-%define _requires_exceptions perl(Data::Flow)\\|perl(Carp::Heavy)\\|perl(Apache::FunctionTable)\\|perl(Apache::StructureTable)\\|perl(Data::Flow)\\|perl(Module::Build)\\|perl(Apache::TestConfigParse)\\|perl(Apache::TestConfigPerl)\\|perl(Apache2::MPM)\\|perl(Apache::SizeLimit)
+%define _requires_exceptions perl(Data::Flow)\\|perl(Carp::Heavy)\\|perl(Apache::FunctionTable)\\|perl(Apache::StructureTable)\\|perl(Data::Flow)\\|perl(Module::Build)\\|perl(Apache::TestConfigParse)\\|perl(Apache::TestConfigPerl)\\|perl(Apache2::MPM)
 
 #Module-Specific definitions
 %define apache_version 2.4.0
@@ -40,7 +40,7 @@
 Summary:	An embedded Perl interpreter for the apache Web server
 Name:		apache-%{mod_name}
 Version:	2.0.6
-Release:	2
+Release:	3
 Group:		System/Servers
 License:	Apache License
 URL:		http://perl.apache.org/
@@ -243,7 +243,7 @@ install -m0644 xs/tables/current/Apache2/StructureTable.pm %{buildroot}%{perl_ve
 find %{buildroot}%{perl_archlib} -name perllocal.pod | xargs rm -f
 
 # don't pack the Apache-Test stuff
-rm -rf %{buildroot}%{perl_vendorarch}/Apache
+rm -f %{buildroot}%{perl_vendorarch}/Apache/Test*
 rm -f %{buildroot}%{perl_vendorarch}/Bundle/ApacheTest.pm
 rm -f %{buildroot}%{_mandir}/man3/Apache::Test*
 rm -f %{buildroot}%{_mandir}/man3/Bundle::ApacheTest.3pm
