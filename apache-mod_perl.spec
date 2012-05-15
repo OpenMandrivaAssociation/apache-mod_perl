@@ -29,7 +29,7 @@
 %define build_debug 1
 %endif
 
-%define _requires_exceptions perl(Data::Flow)\\|perl(Carp::Heavy)\\|perl(Apache::FunctionTable)\\|perl(Apache::StructureTable)\\|perl(Data::Flow)\\|perl(Module::Build)\\|perl(Apache::TestConfigParse)\\|perl(Apache::TestConfigPerl)\\|perl(Apache2::MPM)
+%define _requires_exceptions perl(Data::Flow)\\|perl(Carp::Heavy)\\|perl(Apache::FunctionTable)\\|perl(Apache::StructureTable)\\|perl(Data::Flow)\\|perl(Module::Build)\\|perl(Apache::TestConfigParse)\\|perl(Apache::TestConfigPerl)\\|perl(Apache2::MPM)\\|perl(Apache::SizeLimit)
 
 #Module-Specific definitions
 %define apache_version 2.4.0
