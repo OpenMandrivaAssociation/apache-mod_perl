@@ -247,7 +247,7 @@ rm -f %{buildroot}%{_mandir}/man3/Apache::Test*
 rm -f %{buildroot}%{_mandir}/man3/Bundle::ApacheTest.3pm
 
 # do not ship the patch backups
-find %{buildroot}%{perl_vendorlib} -name '*.pm.cve*' | xargs rm -f
+find %{buildroot}%{perl_vendorarch} -name '*.pm.cve*' | xargs rm -f
 
 %post
 /bin/systemctl daemon-reload >/dev/null 2>&1 || :
@@ -261,64 +261,64 @@ fi
 %doc Changes INSTALL LICENSE README docs todo
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/modules.d/*.conf
 %attr(0755,root,root) %{_libdir}/apache/*.so
-%{perl_vendorlib}/Apache
-%{perl_vendorlib}/Apache2
-%{perl_vendorlib}/Bundle
-%{perl_vendorlib}/ModPerl
-%{perl_vendorlib}/APR
-%{perl_vendorlib}/APR.pm
-%{perl_vendorlib}/mod_perl2.pm
-%{perl_vendorlib}/auto/Apache2/FilterRec
-%{perl_vendorlib}/auto/Apache2/Util
-%{perl_vendorlib}/auto/Apache2/RequestRec
-%{perl_vendorlib}/auto/Apache2/Command
-%{perl_vendorlib}/auto/Apache2/Module
-%{perl_vendorlib}/auto/Apache2/typemap
-%{perl_vendorlib}/auto/Apache2/URI
-%{perl_vendorlib}/auto/Apache2/Process
-%{perl_vendorlib}/auto/Apache2/MPM
-%{perl_vendorlib}/auto/Apache2/Response
-%{perl_vendorlib}/auto/Apache2/Build
-%{perl_vendorlib}/auto/Apache2/Const
-%{perl_vendorlib}/auto/Apache2/Filter
-%{perl_vendorlib}/auto/Apache2/Log
-%{perl_vendorlib}/auto/Apache2/ServerUtil
-%{perl_vendorlib}/auto/Apache2/ServerRec
-%{perl_vendorlib}/auto/Apache2/CmdParms
-%{perl_vendorlib}/auto/Apache2/RequestUtil
-%{perl_vendorlib}/auto/Apache2/RequestIO
-%{perl_vendorlib}/auto/Apache2/SubRequest
-%{perl_vendorlib}/auto/Apache2/Directive
-%{perl_vendorlib}/auto/Apache2/HookRun
-%{perl_vendorlib}/auto/Apache2/Access
-%{perl_vendorlib}/auto/Apache2/Connection
-%{perl_vendorlib}/auto/ModPerl
-%{perl_vendorlib}/auto/ModPerl/Util
-%{perl_vendorlib}/auto/ModPerl/Global
-%{perl_vendorlib}/auto/ModPerl/Const
-%{perl_vendorlib}/auto/APR/BucketAlloc
-%{perl_vendorlib}/auto/APR/IpSubnet
-%{perl_vendorlib}/auto/APR/Util
-%{perl_vendorlib}/auto/APR/Pool
-%{perl_vendorlib}/auto/APR/Finfo
-%{perl_vendorlib}/auto/APR/Socket
-%{perl_vendorlib}/auto/APR/Brigade
-%{perl_vendorlib}/auto/APR/URI
-%{perl_vendorlib}/auto/APR/Error
-%{perl_vendorlib}/auto/APR/ThreadRWLock
-%{perl_vendorlib}/auto/APR/Bucket
-%{perl_vendorlib}/auto/APR/Const
-%{perl_vendorlib}/auto/APR/APR.so
-%{perl_vendorlib}/auto/APR/Status
-%{perl_vendorlib}/auto/APR/SockAddr
-%{perl_vendorlib}/auto/APR/String
-%{perl_vendorlib}/auto/APR/PerlIO
-%{perl_vendorlib}/auto/APR/ThreadMutex
-%{perl_vendorlib}/auto/APR/Date
-%{perl_vendorlib}/auto/APR/UUID
-%{perl_vendorlib}/auto/APR/BucketType
-%{perl_vendorlib}/auto/APR/Base64
-%{perl_vendorlib}/auto/APR/Table
+%{perl_vendorarch}/Apache
+%{perl_vendorarch}/Apache2
+%{perl_vendorarch}/Bundle
+%{perl_vendorarch}/ModPerl
+%{perl_vendorarch}/APR
+%{perl_vendorarch}/APR.pm
+%{perl_vendorarch}/mod_perl2.pm
+%{perl_vendorarch}/auto/Apache2/FilterRec
+%{perl_vendorarch}/auto/Apache2/Util
+%{perl_vendorarch}/auto/Apache2/RequestRec
+%{perl_vendorarch}/auto/Apache2/Command
+%{perl_vendorarch}/auto/Apache2/Module
+%{perl_vendorarch}/auto/Apache2/typemap
+%{perl_vendorarch}/auto/Apache2/URI
+%{perl_vendorarch}/auto/Apache2/Process
+%{perl_vendorarch}/auto/Apache2/MPM
+%{perl_vendorarch}/auto/Apache2/Response
+%{perl_vendorarch}/auto/Apache2/Build
+%{perl_vendorarch}/auto/Apache2/Const
+%{perl_vendorarch}/auto/Apache2/Filter
+%{perl_vendorarch}/auto/Apache2/Log
+%{perl_vendorarch}/auto/Apache2/ServerUtil
+%{perl_vendorarch}/auto/Apache2/ServerRec
+%{perl_vendorarch}/auto/Apache2/CmdParms
+%{perl_vendorarch}/auto/Apache2/RequestUtil
+%{perl_vendorarch}/auto/Apache2/RequestIO
+%{perl_vendorarch}/auto/Apache2/SubRequest
+%{perl_vendorarch}/auto/Apache2/Directive
+%{perl_vendorarch}/auto/Apache2/HookRun
+%{perl_vendorarch}/auto/Apache2/Access
+%{perl_vendorarch}/auto/Apache2/Connection
+%{perl_vendorarch}/auto/ModPerl
+%{perl_vendorarch}/auto/ModPerl/Util
+%{perl_vendorarch}/auto/ModPerl/Global
+%{perl_vendorarch}/auto/ModPerl/Const
+%{perl_vendorarch}/auto/APR/BucketAlloc
+%{perl_vendorarch}/auto/APR/IpSubnet
+%{perl_vendorarch}/auto/APR/Util
+%{perl_vendorarch}/auto/APR/Pool
+%{perl_vendorarch}/auto/APR/Finfo
+%{perl_vendorarch}/auto/APR/Socket
+%{perl_vendorarch}/auto/APR/Brigade
+%{perl_vendorarch}/auto/APR/URI
+%{perl_vendorarch}/auto/APR/Error
+%{perl_vendorarch}/auto/APR/ThreadRWLock
+%{perl_vendorarch}/auto/APR/Bucket
+%{perl_vendorarch}/auto/APR/Const
+%{perl_vendorarch}/auto/APR/APR.so
+%{perl_vendorarch}/auto/APR/Status
+%{perl_vendorarch}/auto/APR/SockAddr
+%{perl_vendorarch}/auto/APR/String
+%{perl_vendorarch}/auto/APR/PerlIO
+%{perl_vendorarch}/auto/APR/ThreadMutex
+%{perl_vendorarch}/auto/APR/Date
+%{perl_vendorarch}/auto/APR/UUID
+%{perl_vendorarch}/auto/APR/BucketType
+%{perl_vendorarch}/auto/APR/Base64
+%{perl_vendorarch}/auto/APR/Table
 
 %{_mandir}/*/*
 %attr(0755,root,root) %{_var}/www/perl/*.pl
