@@ -137,8 +137,8 @@ done
     MP_APXS=%{_bindir}/apxs \
     MP_APR_CONFIG=%{_bindir}/apr-1-config
 
-%make source_scan
-%make xs_generate
+make source_scan
+make xs_generate
 
 %{__perl} Makefile.PL \
 %if %{build_debug}
