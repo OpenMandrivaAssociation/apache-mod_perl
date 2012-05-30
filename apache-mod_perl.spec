@@ -29,8 +29,6 @@
 %define build_debug 1
 %endif
 
-%define _requires_exceptions perl(Data::Flow)\\|perl(Carp::Heavy)\\|perl(Apache::FunctionTable)\\|perl(Apache::StructureTable)\\|perl(Data::Flow)\\|perl(Module::Build)\\|perl(Apache::TestConfigParse)\\|perl(Apache::TestConfigPerl)
-
 #Module-Specific definitions
 %define apache_version 2.4.0
 %define mod_name mod_perl
@@ -263,7 +261,65 @@ fi
 %doc Changes INSTALL LICENSE README docs todo
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/modules.d/*.conf
 %attr(0755,root,root) %{_libdir}/apache/*.so
-%{perl_vendorlib}
+%{perl_vendorlib}/Apache
+%{perl_vendorlib}/Apache2
+%{perl_vendorlib}/Bundle
+%{perl_vendorlib}/ModPerl
+%{perl_vendorlib}/APR
+%{perl_vendorlib}/APR.pm
+%{perl_vendorlib}/mod_perl2.pm
+%{perl_vendorlib}/auto/Apache2/FilterRec
+%{perl_vendorlib}/auto/Apache2/Util
+%{perl_vendorlib}/auto/Apache2/RequestRec
+%{perl_vendorlib}/auto/Apache2/Command
+%{perl_vendorlib}/auto/Apache2/Module
+%{perl_vendorlib}/auto/Apache2/typemap
+%{perl_vendorlib}/auto/Apache2/URI
+%{perl_vendorlib}/auto/Apache2/Process
+%{perl_vendorlib}/auto/Apache2/MPM
+%{perl_vendorlib}/auto/Apache2/Response
+%{perl_vendorlib}/auto/Apache2/Build
+%{perl_vendorlib}/auto/Apache2/Const
+%{perl_vendorlib}/auto/Apache2/Filter
+%{perl_vendorlib}/auto/Apache2/Log
+%{perl_vendorlib}/auto/Apache2/ServerUtil
+%{perl_vendorlib}/auto/Apache2/ServerRec
+%{perl_vendorlib}/auto/Apache2/CmdParms
+%{perl_vendorlib}/auto/Apache2/RequestUtil
+%{perl_vendorlib}/auto/Apache2/RequestIO
+%{perl_vendorlib}/auto/Apache2/SubRequest
+%{perl_vendorlib}/auto/Apache2/Directive
+%{perl_vendorlib}/auto/Apache2/HookRun
+%{perl_vendorlib}/auto/Apache2/Access
+%{perl_vendorlib}/auto/Apache2/Connection
+%{perl_vendorlib}/auto/ModPerl
+%{perl_vendorlib}/auto/ModPerl/Util
+%{perl_vendorlib}/auto/ModPerl/Global
+%{perl_vendorlib}/auto/ModPerl/Const
+%{perl_vendorlib}/auto/APR/BucketAlloc
+%{perl_vendorlib}/auto/APR/IpSubnet
+%{perl_vendorlib}/auto/APR/Util
+%{perl_vendorlib}/auto/APR/Pool
+%{perl_vendorlib}/auto/APR/Finfo
+%{perl_vendorlib}/auto/APR/Socket
+%{perl_vendorlib}/auto/APR/Brigade
+%{perl_vendorlib}/auto/APR/URI
+%{perl_vendorlib}/auto/APR/Error
+%{perl_vendorlib}/auto/APR/ThreadRWLock
+%{perl_vendorlib}/auto/APR/Bucket
+%{perl_vendorlib}/auto/APR/Const
+%{perl_vendorlib}/auto/APR/APR.so
+%{perl_vendorlib}/auto/APR/Status
+%{perl_vendorlib}/auto/APR/SockAddr
+%{perl_vendorlib}/auto/APR/String
+%{perl_vendorlib}/auto/APR/PerlIO
+%{perl_vendorlib}/auto/APR/ThreadMutex
+%{perl_vendorlib}/auto/APR/Date
+%{perl_vendorlib}/auto/APR/UUID
+%{perl_vendorlib}/auto/APR/BucketType
+%{perl_vendorlib}/auto/APR/Base64
+%{perl_vendorlib}/auto/APR/Table
+
 %{_mandir}/*/*
 %attr(0755,root,root) %{_var}/www/perl/*.pl
 
