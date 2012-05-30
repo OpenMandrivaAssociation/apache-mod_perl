@@ -53,6 +53,7 @@ Requires:       perl = %{perl_version}
 BuildRequires:	perl-devel >= 5.8.2
 BuildRequires:  perl-Tie-IxHash
 BuildRequires:	perl-Data-Flow
+BuildRequires:  apache-mpm-prefork
 %if %{build_test}
 BuildRequires:	perl-CGI >= 1:3.08
 BuildRequires:	perl-HTML-Parser
@@ -292,7 +293,6 @@ fi
 %{perl_vendorarch}/auto/Apache2/HookRun
 %{perl_vendorarch}/auto/Apache2/Access
 %{perl_vendorarch}/auto/Apache2/Connection
-%{perl_vendorarch}/auto/ModPerl
 %{perl_vendorarch}/auto/ModPerl/Util
 %{perl_vendorarch}/auto/ModPerl/Global
 %{perl_vendorarch}/auto/ModPerl/Const
