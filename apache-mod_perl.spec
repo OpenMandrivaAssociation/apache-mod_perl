@@ -48,7 +48,6 @@ Source2:	mod_perl.conf
 Source3:	apache-mod_perl-testscript.pl
 Patch1:         mod_perl-2.0.4-inline.patch
 Patch2:		mod_perl-2.0.6-httpd24.patch
-Patch3:		mod_perl-2.0.6-optincnoexec.patch
 Requires:       perl = %{perl_version}
 BuildRequires:	perl-devel >= 5.8.2
 BuildRequires:  perl-Tie-IxHash
@@ -120,7 +119,6 @@ modules that use mod_perl.
 %setup -q -n %{mod_name}-%{version}
 %patch1 -p1 -b .inline
 %patch2 -p1 -b .httpd24
-%patch3 -p0 -b .optincnoexec
 
 cp %{SOURCE2} .
 perl -pi -e "s|_MODULE_DIR_|%{_libdir}/apache|g" mod_perl.conf
@@ -133,12 +131,12 @@ done
 
 # Compile the module.
 
-%{__perl} Makefile.PL \
-    MP_APXS=%{_bindir}/apxs \
-    MP_APR_CONFIG=%{_bindir}/apr-1-config
-
-make source_scan
-make xs_generate
+#%{__perl} Makefile.PL \
+#    MP_APXS=%{_bindir}/apxs \
+#    MP_APR_CONFIG=%{_bindir}/apr-1-config
+#
+#make source_scan
+#make xs_generate
 
 %{__perl} Makefile.PL \
 %if %{build_debug}
