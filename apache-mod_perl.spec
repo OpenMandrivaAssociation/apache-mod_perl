@@ -37,8 +37,8 @@
 
 Summary:	An embedded Perl interpreter for the apache Web server
 Name:		apache-%{mod_name}
-Version:	2.0.6
-Release:	5
+Version:	2.0.7
+Release:	1
 Group:		System/Servers
 License:	Apache License
 URL:		http://perl.apache.org/
@@ -46,8 +46,8 @@ Source0:	http://perl.apache.org/dist/%{mod_name}-%{version}.tar.gz
 Source1:	http://perl.apache.org/dist/%{mod_name}-%{version}.tar.gz.asc
 Source2:	mod_perl.conf
 Source3:	apache-mod_perl-testscript.pl
+Patch:		mod_perl-2.0.7-httpd-2.4.x.patch
 Patch1:         mod_perl-2.0.4-inline.patch
-Patch2:		mod_perl-2.0.6-httpd24.patch
 Requires:       perl = %{perl_version}
 BuildRequires:	perl-devel >= 5.8.2
 BuildRequires:  perl-Tie-IxHash
@@ -117,8 +117,8 @@ modules that use mod_perl.
 %prep
 
 %setup -q -n %{mod_name}-%{version}
+%patch -p1 -b .httpd24~
 %patch1 -p1 -b .inline
-%patch2 -p1 -b .httpd24
 
 cp %{SOURCE2} .
 perl -pi -e "s|_MODULE_DIR_|%{_libdir}/apache|g" mod_perl.conf
@@ -271,12 +271,14 @@ fi
 %{perl_vendorarch}/auto/Apache2/Util
 %{perl_vendorarch}/auto/Apache2/RequestRec
 %{perl_vendorarch}/auto/Apache2/Command
+%{perl_vendorarch}/auto/Apache2/ConnectionUtil
 %{perl_vendorarch}/auto/Apache2/Module
 %{perl_vendorarch}/auto/Apache2/typemap
 %{perl_vendorarch}/auto/Apache2/URI
 %{perl_vendorarch}/auto/Apache2/Process
 %{perl_vendorarch}/auto/Apache2/MPM
 %{perl_vendorarch}/auto/Apache2/Response
+%{perl_vendorarch}/auto/Apache2/SubProcess
 %{perl_vendorarch}/auto/Apache2/Build
 %{perl_vendorarch}/auto/Apache2/Const
 %{perl_vendorarch}/auto/Apache2/Filter
@@ -310,6 +312,7 @@ fi
 %{perl_vendorarch}/auto/APR/Status
 %{perl_vendorarch}/auto/APR/SockAddr
 %{perl_vendorarch}/auto/APR/String
+%{perl_vendorarch}/auto/APR/OS
 %{perl_vendorarch}/auto/APR/PerlIO
 %{perl_vendorarch}/auto/APR/ThreadMutex
 %{perl_vendorarch}/auto/APR/Date
