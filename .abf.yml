@@ -1,5 +1,2 @@
 sources:
-  "apache-mod_perl-testscript.pl:"	7cc00bc98463c96f7fa9deac01af407fff61161b
-  "mod_perl-2.0.7.tar.gz:"	364143b2aef3c6dae69a8a2ea5d8ea2462882cd3
-  "mod_perl-2.0.7.tar.gz.asc:"	940804b77ff3e9f890d6a7f63fcec80751f911a7
-  "mod_perl.conf:"	f8a49e8cd762e67591f97f9a0b4f040e461762e3
+  "mod_perl-2.0.7.tar.gz": 364143b2aef3c6dae69a8a2ea5d8ea2462882cd3
