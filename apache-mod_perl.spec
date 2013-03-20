@@ -9,6 +9,8 @@
 %define build_debug 0
 %define build_test 0
 
+%define svn_rev 1458708
+
 # commandline overrides:
 # rpm -ba|--rebuild --with 'xxx'
 %{?_with_debug: %{expand: %%global build_debug 1}}
@@ -38,16 +40,23 @@
 Summary:	An embedded Perl interpreter for the apache Web server
 Name:		apache-%{mod_name}
 Version:	2.0.7
-Release:	1
+%if %{svn_rev}
+Release:	2.svn%{svn_rev}.1
+%else
+Release:	3
+%endif
 Group:		System/Servers
 License:	Apache License
 URL:		http://perl.apache.org/
+%if %{svn_rev}
+Source0:        %{mod_name}-%{version}-svn%{svn_rev}.tar.gz
+%else
 Source0:	http://perl.apache.org/dist/%{mod_name}-%{version}.tar.gz
 Source1:	http://perl.apache.org/dist/%{mod_name}-%{version}.tar.gz.asc
+%endif
 Source2:	mod_perl.conf
 Source3:	apache-mod_perl-testscript.pl
-Patch:		mod_perl-2.0.7-httpd-2.4.x.patch
-Patch1:         mod_perl-2.0.4-inline.patch
+Patch0:		mod_perl-2.0.4-inline.patch
 Requires:       perl = %{perl_version}
 BuildRequires:	perl-devel >= 5.8.2
 BuildRequires:  perl-Tie-IxHash
@@ -116,9 +125,13 @@ modules that use mod_perl.
 
 %prep
 
+%if %{svn_rev}
+%setup -q -n %{mod_name}-%{version}-svn%{svn_rev}
+%else
 %setup -q -n %{mod_name}-%{version}
-%patch -p1 -b .httpd24~
-%patch1 -p1 -b .inline
+%endif
+
+%patch0 -p1 -b .inline
 
 cp %{SOURCE2} .
 perl -pi -e "s|_MODULE_DIR_|%{_libdir}/apache|g" mod_perl.conf
@@ -241,6 +254,7 @@ find %{buildroot}%{perl_archlib} -name perllocal.pod | xargs rm -f
 
 # don't pack the Apache-Test stuff
 rm -f %{buildroot}%{perl_vendorarch}/Apache/Test*
+rm -rf %{buildroot}%{perl_vendorarch}/MyTest*
 rm -f %{buildroot}%{perl_vendorarch}/Bundle/ApacheTest.pm
 rm -f %{buildroot}%{_mandir}/man3/Apache::Test*
 rm -f %{buildroot}%{_mandir}/man3/Bundle::ApacheTest.3pm
@@ -286,6 +300,7 @@ fi
 %{perl_vendorarch}/auto/Apache2/ServerUtil
 %{perl_vendorarch}/auto/Apache2/ServerRec
 %{perl_vendorarch}/auto/Apache2/CmdParms
+%{perl_vendorarch}/auto/Apache2/Provider
 %{perl_vendorarch}/auto/Apache2/RequestUtil
 %{perl_vendorarch}/auto/Apache2/RequestIO
 %{perl_vendorarch}/auto/Apache2/SubRequest
