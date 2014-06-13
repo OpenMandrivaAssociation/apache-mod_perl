@@ -44,7 +44,7 @@ Version:	2.0.8
 %if %{svn_rev}
 Release:	2.svn%{svn_rev}.2
 %else
-Release:	6
+Release:	7
 %endif
 Group:		System/Servers
 License:	Apache License
