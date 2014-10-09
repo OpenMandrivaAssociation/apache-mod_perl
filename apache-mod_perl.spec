@@ -35,14 +35,13 @@
 %define apache_version 2.4.0
 %define mod_name mod_perl
 %define load_order 175
-%define perl_version %(rpm -q --qf '%%{epoch}:%%{version}' perl)
 
 Summary:	An embedded Perl interpreter for the apache Web server
 
 Name:		apache-%{mod_name}
 Version:	2.0.8
 %if %{svn_rev}
-Release:	2.svn%{svn_rev}.3
+Release:	2.svn%{svn_rev}.4
 %else
 Release:	8
 %endif
@@ -58,7 +57,7 @@ Source1:	http://www.apache.org/dist/perl/%{mod_name}-%{version}.tar.gz.asc
 Source2:	mod_perl.conf
 Source3:	apache-mod_perl-testscript.pl
 Patch0:		mod_perl-2.0.4-inline.patch
-Requires:       perl = %{perl_version}
+Requires:       perl
 BuildRequires:	perl-devel >= 5.8.2
 BuildRequires:  perl-Tie-IxHash
 BuildRequires:	perl-Data-Flow
