@@ -42,7 +42,7 @@ Summary:	An embedded Perl interpreter for the apache Web server
 Name:		apache-%{mod_name}
 Version:	2.0.8
 %if %{svn_rev}
-Release:	2.svn%{svn_rev}.2
+Release:	2.svn%{svn_rev}.3
 %else
 Release:	8
 %endif
