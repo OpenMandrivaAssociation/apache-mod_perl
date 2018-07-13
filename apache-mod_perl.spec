@@ -58,6 +58,7 @@ Source2:	mod_perl.conf
 Source3:	apache-mod_perl-testscript.pl
 Patch0:		mod_perl-2.0.4-inline.patch
 Requires:       perl
+BuildRequires:	perl(ExtUtils::Embed)
 BuildRequires:	perl-devel >= 5.8.2
 BuildRequires:  perl-Tie-IxHash
 BuildRequires:	perl-Data-Flow
