@@ -39,11 +39,11 @@
 Summary:	An embedded Perl interpreter for the apache Web server
 
 Name:		apache-%{mod_name}
-Version:	2.0.8
+Version:	2.0.10
 %if %{svn_rev}
 Release:	2.svn%{svn_rev}.4
 %else
-Release:	12
+Release:	1
 %endif
 Group:		System/Servers
 License:	Apache License
