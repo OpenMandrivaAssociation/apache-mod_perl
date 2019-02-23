@@ -74,8 +74,6 @@ BuildRequires: apache-devel >= %{apache_version}
 Requires:   apache >= %{apache_version}
 Provides:   perl(mod_perl)
 Provides:   perl(mod_perl2)
-# for Apache::SizeLimit to work, mga#2070
-Requires:   perl(Linux::Pid)
 Epoch:      1
 
 %description
