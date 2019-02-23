@@ -116,12 +116,7 @@ The mod_perl-devel package contains the files needed for building XS
 modules that use mod_perl.
 
 %prep
-
-%if %{svn_rev}
-%setup -q -n %{mod_name}-%{version}-svn%{svn_rev}
-%else
 %setup -q -n %{mod_name}-%{version}
-%endif
 
 %patch0 -p1 -b .inline
 
