@@ -9,8 +9,6 @@
 %define build_debug 0
 %define build_test 0
 
-%define svn_rev 1590627
-
 # commandline overrides:
 # rpm -ba|--rebuild --with 'xxx'
 %{?_with_debug: %{expand: %%global build_debug 1}}
@@ -40,17 +38,10 @@ Summary:	An embedded Perl interpreter for the apache Web server
 
 Name:		apache-%{mod_name}
 Version:	2.0.10
-%if %{svn_rev}
-Release:	2.svn%{svn_rev}.4
-%else
 Release:	1
-%endif
 Group:		System/Servers
 License:	Apache License
 URL:		http://perl.apache.org/
-%if %{svn_rev}
-Source0:        %{mod_name}-%{version}-svn%{svn_rev}.tar.xz
-%else
 Source0:	http://www.apache.org/dyn/closer.cgi/perl/%{mod_name}-%{version}.tar.gz
 Source1:	http://www.apache.org/dist/perl/%{mod_name}-%{version}.tar.gz.asc
 %endif
