@@ -128,8 +128,8 @@ export CFLAGS="$RPM_OPT_FLAGS -fpic"
 
 %{__perl} Makefile.PL \
     PREFIX=%{_prefix} \
-    MP_APXS=%{_httpd_apxs} \
-    MP_APR_CONFIG=%{_bindir}/apr-1-config \
+    #MP_APXS=%{_httpd_apxs} \
+    #MP_APR_CONFIG=%{_bindir}/apr-1-config \
     INSTALLDIRS=vendor \
     </dev/null
 
