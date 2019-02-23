@@ -48,6 +48,7 @@ Patch5:     mod_perl-2.0.10-restrict_perl_section_to_server_scope.patch
 BuildRequires: perl-devel >= 5.8.2
 BuildRequires: perl(Tie::IxHash)
 BuildRequires: perl(Data::Flow)
+BuildRequires: perl-ExtUtils-Embed
 BuildRequires: apache >= %{apache_version}
 %if %{build_test}
 BuildRequires: perl-CGI >= 1:3.08
