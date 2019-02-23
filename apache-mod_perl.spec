@@ -224,10 +224,10 @@ rm -f %{buildroot}%{_mandir}/man3/Bundle::ApacheTest.3pm
 
 %files
 %doc BRANCHING Changes INSTALL LICENSE META.yml NOTICE README RELEASE STATUS
-%config(noreplace) %{_httpd_extconfdir}/perl.conf
-%config(noreplace) %{_httpd_modconfdir}/02-perl.conf
+#config(noreplace) %{_httpd_extconfdir}/perl.conf
+#config(noreplace) %{_httpd_modconfdir}/02-perl.conf
 %{_bindir}/*
-%{_httpd_moddir}/mod_perl.so
+#{_httpd_moddir}/mod_perl.so
 %{perl_vendorarch}/Apache
 %{perl_vendorarch}/Apache2
 %{perl_vendorarch}/Bundle
