@@ -1,15 +1,13 @@
 #(ie. use with rpm --rebuild):
 #
 #	--with debug	Compile with debugging code
-# 
+#
 #  enable build with debugging code: will _not_ strip away any debugging code,
-#  will _add_ -g3 to CFLAGS, will _add_ --enable-maintainer-mode to 
+#  will _add_ -g3 to CFLAGS, will _add_ --enable-maintainer-mode to
 #  configure.
 
 %define build_debug 0
 %define build_test 0
-
-%define svn_rev 1590627
 
 # commandline overrides:
 # rpm -ba|--rebuild --with 'xxx'
@@ -31,70 +29,52 @@
 %define build_debug 1
 %endif
 
-#Module-Specific definitions
-%define apache_version 2.4.0
+%define apache_version 2.4.37
 %define mod_name mod_perl
-%define load_order 175
 
-Summary:	An embedded Perl interpreter for the apache Web server
-
-Name:		apache-%{mod_name}
-Version:	2.0.8
-%if %{svn_rev}
-Release:	2.svn%{svn_rev}.4
-%else
-Release:	12
-%endif
-Group:		System/Servers
-License:	Apache License
-URL:		http://perl.apache.org/
-%if %{svn_rev}
-Source0:        %{mod_name}-%{version}-svn%{svn_rev}.tar.xz
-%else
-Source0:	http://www.apache.org/dyn/closer.cgi/perl/%{mod_name}-%{version}.tar.gz
-Source1:	http://www.apache.org/dist/perl/%{mod_name}-%{version}.tar.gz.asc
-%endif
-Source2:	mod_perl.conf
-Source3:	apache-mod_perl-testscript.pl
-Patch0:		mod_perl-2.0.4-inline.patch
-Requires:       perl
-BuildRequires:	perl(ExtUtils::Embed)
-BuildRequires:	perl-devel >= 5.8.2
-BuildRequires:  perl-Tie-IxHash
-BuildRequires:	perl-Data-Flow
-BuildRequires:  apache-mpm-prefork
+Name:       apache-%{mod_name}
+Version:    2.0.10
+Release:    1
+Summary:    An embedded Perl interpreter for the apache Web server
+Group:      System/Servers
+License:    Apache License
+Url:        http://perl.apache.org/
+Source0:    http://www-eu.apache.org/dist/perl/%{mod_name}-%{version}.tar.gz
+Source1:    http://www-eu.apache.org/dist/perl/%{mod_name}-%{version}.tar.gz.asc
+Source2:    perl.conf
+Source3:    perl.module.conf
+Patch0:     mod_perl-2.0.4-inline.patch
+Patch5:     mod_perl-2.0.10-restrict_perl_section_to_server_scope.patch
+BuildRequires: perl-devel >= 5.8.2
+BuildRequires: perl(Tie::IxHash)
+BuildRequires: perl(Data::Flow)
+BuildRequires: perl-ExtUtils-Embed
+BuildRequires: perl-Test
+BuildRequires: apache >= %{apache_version}
+BuildRequires: gdbm-devel
+BuildRequires: pkgconfig(uuid)
 %if %{build_test}
-BuildRequires:	perl-CGI >= 1:3.08
-BuildRequires:	perl-HTML-Parser
-BuildRequires:	perl-libwww-perl
-BuildRequires:	perl-URI
-BuildRequires:	perl-BSD-Resource
-BuildRequires:	apache-mpm-prefork >= %{apache_version}
-BuildRequires:	apache-base >= %{apache_version}
-BuildRequires:	apache-modules >= %{apache_version}
-BuildRequires:	apache-mod_cache >= %{apache_version}
-BuildRequires:	apache-mod_dav >= %{apache_version}
-BuildRequires:	apache-mod_deflate >= %{apache_version}
-BuildRequires:	apache-mod_disk_cache >= %{apache_version}
-BuildRequires:	apache-mod_file_cache >= %{apache_version}
-BuildRequires:	apache-mod_ldap >= %{apache_version}
-BuildRequires:	apache-mod_proxy >= %{apache_version}
-BuildRequires:	apache-mod_ssl >= %{apache_version}
-BuildRequires:	apache-mod_suexec >= %{apache_version}
-BuildRequires:	apache-mod_userdir >= %{apache_version}
+BuildRequires: perl-CGI >= 1:3.08
+BuildRequires: perl-HTML-Parser
+BuildRequires: perl-libwww-perl
+BuildRequires: perl-URI
+BuildRequires: perl-BSD-Resource
+BuildRequires: apache-mod_cache >= %{apache_version}
+BuildRequires: apache-mod_dav >= %{apache_version}
+BuildRequires: apache-mod_deflate >= %{apache_version}
+BuildRequires: apache-mod_disk_cache >= %{apache_version}
+BuildRequires: apache-mod_file_cache >= %{apache_version}
+BuildRequires: apache-mod_ldap >= %{apache_version}
+BuildRequires: apache-mod_proxy >= %{apache_version}
+BuildRequires: apache-mod_ssl >= %{apache_version}
+BuildRequires: apache-mod_suexec >= %{apache_version}
+BuildRequires: apache-mod_userdir >= %{apache_version}
 %endif
-Requires(pre): rpm-helper
-Requires(postun): rpm-helper
-Requires(pre):  apache-mpm-prefork >= %{apache_version}
-Requires(pre):  apache-base >= %{apache_version}
-Requires(pre):  apache-modules >= %{apache_version}
-Requires:	apache-mpm-prefork >= %{apache_version}
-Requires:	apache-base >= %{apache_version}
-Requires:	apache-modules >= %{apache_version}
-Requires:	perl(Apache2::Reload)
-BuildRequires:	apache-devel >= %{apache_version}
-Obsoletes:	perl-Apache-Reload
-Epoch:		1
+BuildRequires: apache-devel >= %{apache_version}
+Requires:   apache >= %{apache_version}
+Provides:   perl(mod_perl)
+Provides:   perl(mod_perl2)
+Epoch:      1
 
 %description
 %{name} incorporates a Perl interpreter into the apache web server,
@@ -114,67 +94,48 @@ You can build %{name} with some conditional build swithes;
     --with[out]	test	Initiate a Apache-Test run
 
 %package	devel
-Summary:	Files needed for building XS modules that use mod_perl
+Summary:    Files needed for building XS modules that use mod_perl
+Group:      Development/C
+Requires:   %{name} = 1:%{version}
+Requires:   apache-devel >= %{apache_version}
+Epoch:      1
 
-Group:		Development/C
-Requires:	%{name} = 1:%{version}
-Requires:	apache-devel >= %{apache_version}
-Epoch:		1
-
-%description	devel 
+%description	devel
 The mod_perl-devel package contains the files needed for building XS
 modules that use mod_perl.
 
 %prep
 
-%if %{svn_rev}
-%setup -q -n %{mod_name}-%{version}-svn%{svn_rev}
-%else
 %setup -q -n %{mod_name}-%{version}
-%endif
-
-%patch0 -p1 -b .inline
-
-cp %{SOURCE2} .
-perl -pi -e "s|_MODULE_DIR_|%{_libdir}/apache|g" mod_perl.conf
-
-for i in `find . -type d -name .svn`; do
-    if [ -e "$i" ]; then rm -rf $i; fi >&/dev/null
-done
+%autopatch -p1
 
 %build
 
-# Compile the module.
+for i in Changes SVN-MOVE; do
+    iconv --from=ISO-8859-1 --to=UTF-8 $i > $i.utf8
+    mv $i.utf8 $i
+done
 
-#%{__perl} Makefile.PL \
-#    MP_APXS=%{_bindir}/apxs \
-#    MP_APR_CONFIG=%{_bindir}/apr-1-config
-#
-#make source_scan
-#make xs_generate
+cd docs
+for i in devel/debug/c.pod devel/core/explained.pod user/Changes.pod; do
+    iconv --from=ISO-8859-1 --to=UTF-8 $i > $i.utf8
+    mv $i.utf8 $i
+done
+cd ..
+
+export CFLAGS="$RPM_OPT_FLAGS -fpic"
 
 %{__perl} Makefile.PL \
-%if %{build_debug}
-    MP_MAINTAINER=1 \
-    MP_TRACE=1 \
-    MP_CCOPTS="$(%{_bindir}/apxs -q CFLAGS|sed -e 's/-fPIE//') -g3 -Werror -fPIC" \
-%else
-    MP_CCOPTS="$(%{_bindir}/apxs -q CFLAGS|sed -e 's/-fPIE//') -fPIC" \
-%endif
-    MP_APXS=%{_bindir}/apxs \
-    MP_APR_CONFIG=%{_bindir}/apr-1-config \
-    INSTALLDIRS=vendor </dev/null 
+    PREFIX=%{_prefix} \
+    #MP_APXS=%{_httpd_apxs} \
+    #MP_APR_CONFIG=%{_bindir}/apr-1-config \
+    INSTALLDIRS=vendor \
+    </dev/null
 
-ln -s Apache-mod_perl_guide-1.29/bin bin
+%make -C src/modules/perl OPTIMIZE="$RPM_OPT_FLAGS -fpic"
 %make
 
-# XXX mod_include/SSI does not include files when they are not named .shtml
-mv t/htdocs/includes-registry/test.pl t/htdocs/includes-registry/test.shtml
-mv t/htdocs/includes-registry/cgipm.pl t/htdocs/includes-registry/cgipm.shtml
-sed 's/\.pl/.shtml/' t/htdocs/includes/test.shtml > tmpfile && mv tmpfile t/htdocs/includes/test.shtml
-
 %install
-
 %if %{build_debug}
 export DONT_STRIP=1
 %endif
@@ -223,59 +184,48 @@ perl t/TEST -stop-httpd
 #    APACHE_TEST_COLOR=1 \
 #    TEST_VERBOSE=1 \
 #    APACHE_TEST_HTTPD=%{_sbindir}/httpd \
-#    APACHE_TEST_APXS=%{_sbindir}/apxs \
+#    APACHE_TEST_APXS=%{_bindir}/apxs \
 #    test
 
 %endif
 
-# make some directories
-install -d %{buildroot}%{_libdir}/apache
-install -d %{buildroot}%{_sysconfdir}/httpd/modules.d
-install -d %{buildroot}%{_var}/www/perl
-
+install -d %{buildroot}%{_httpd_moddir}
 %makeinstall_std \
-    MODPERL_AP_LIBEXECDIR=%{_libdir}/apache \
-    MODPERL_AP_INCLUDEDIR=%{_includedir}/apache \
+    MODPERL_AP_LIBEXECDIR=%{_httpd_moddir} \
+    MODPERL_AP_INCLUDEDIR=%{_includedir}/httpd \
     INSTALLDIRS=vendor
 
-install -m0644 mod_perl.conf %{buildroot}%{_sysconfdir}/httpd/modules.d/%{load_order}_%{mod_name}.conf
-
-# Remove empty file
-rm -f docs/api/mod_perl-2.0/pm_to_blib
-
-install -m0755 %{SOURCE3} %{buildroot}%{_var}/www/perl
+# install config file
+install -d -m 755 %{buildroot}%{_httpd_extconfdir}
+install -d -m 755 %{buildroot}%{_httpd_modconfdir}
+install -p -m 644 %{SOURCE2} %{buildroot}%{_httpd_extconfdir}
+install -p -m 644 %{SOURCE3} %{buildroot}%{_httpd_modconfdir}/02-perl.conf
 
 # install missing required files
 install -d %{buildroot}%{perl_vendorarch}/Apache2/Apache
-install -m0644 xs/tables/current/Apache2/ConstantsTable.pm %{buildroot}%{perl_vendorarch}/Apache2/Apache/
-install -m0644 xs/tables/current/Apache2/FunctionTable.pm %{buildroot}%{perl_vendorarch}/Apache2/Apache/
-install -m0644 xs/tables/current/Apache2/StructureTable.pm %{buildroot}%{perl_vendorarch}/Apache2/Apache/
+install -m0644 xs/tables/current/Apache2/ConstantsTable.pm \
+    %{buildroot}%{perl_vendorarch}/Apache2/Apache/
+install -m0644 xs/tables/current/Apache2/FunctionTable.pm \
+    %{buildroot}%{perl_vendorarch}/Apache2/Apache/
+install -m0644 xs/tables/current/Apache2/StructureTable.pm \
+    %{buildroot}%{perl_vendorarch}/Apache2/Apache/
 
 # cleanup
 find %{buildroot}%{perl_archlib} -name perllocal.pod | xargs rm -f
 
 # don't pack the Apache-Test stuff
-rm -f %{buildroot}%{perl_vendorarch}/Apache/Test*
-rm -rf %{buildroot}%{perl_vendorarch}/MyTest*
+rm -rf %{buildroot}%{perl_vendorarch}/Apache/Test*
+rm -rf %{buildroot}%{perl_vendorarch}/MyTest
 rm -f %{buildroot}%{perl_vendorarch}/Bundle/ApacheTest.pm
 rm -f %{buildroot}%{_mandir}/man3/Apache::Test*
 rm -f %{buildroot}%{_mandir}/man3/Bundle::ApacheTest.3pm
 
-# do not ship the patch backups
-find %{buildroot}%{perl_vendorarch} -name '*.pm.cve*' | xargs rm -f
-
-%post
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-
-%postun
-if [ "$1" = "0" ]; then
-    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
-fi
-
-%files -n %{name}
-%doc Changes INSTALL LICENSE README docs todo
-%attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/modules.d/*.conf
-%attr(0755,root,root) %{_libdir}/apache/*.so
+%files
+%doc BRANCHING Changes INSTALL LICENSE META.yml NOTICE README RELEASE STATUS
+#config(noreplace) %{_httpd_extconfdir}/perl.conf
+#config(noreplace) %{_httpd_modconfdir}/02-perl.conf
+%{_bindir}/*
+#{_httpd_moddir}/mod_perl.so
 %{perl_vendorarch}/Apache
 %{perl_vendorarch}/Apache2
 %{perl_vendorarch}/Bundle
@@ -283,70 +233,10 @@ fi
 %{perl_vendorarch}/APR
 %{perl_vendorarch}/APR.pm
 %{perl_vendorarch}/mod_perl2.pm
-%{perl_vendorarch}/auto/Apache2/FilterRec
-%{perl_vendorarch}/auto/Apache2/Util
-%{perl_vendorarch}/auto/Apache2/RequestRec
-%{perl_vendorarch}/auto/Apache2/Command
-%{perl_vendorarch}/auto/Apache2/ConnectionUtil
-%{perl_vendorarch}/auto/Apache2/Module
-%{perl_vendorarch}/auto/Apache2/typemap
-%{perl_vendorarch}/auto/Apache2/URI
-%{perl_vendorarch}/auto/Apache2/Process
-%{perl_vendorarch}/auto/Apache2/MPM
-%{perl_vendorarch}/auto/Apache2/Response
-%{perl_vendorarch}/auto/Apache2/SubProcess
-%{perl_vendorarch}/auto/Apache2/Build
-%{perl_vendorarch}/auto/Apache2/Const
-%{perl_vendorarch}/auto/Apache2/Filter
-%{perl_vendorarch}/auto/Apache2/Log
-%{perl_vendorarch}/auto/Apache2/ServerUtil
-%{perl_vendorarch}/auto/Apache2/ServerRec
-%{perl_vendorarch}/auto/Apache2/CmdParms
-%{perl_vendorarch}/auto/Apache2/Provider
-%{perl_vendorarch}/auto/Apache2/RequestUtil
-%{perl_vendorarch}/auto/Apache2/RequestIO
-%{perl_vendorarch}/auto/Apache2/SubRequest
-%{perl_vendorarch}/auto/Apache2/Directive
-%{perl_vendorarch}/auto/Apache2/HookRun
-%{perl_vendorarch}/auto/Apache2/Access
-%{perl_vendorarch}/auto/Apache2/Connection
-%{perl_vendorarch}/auto/ModPerl/Util
-%{perl_vendorarch}/auto/ModPerl/Global
-%{perl_vendorarch}/auto/ModPerl/Const
-%{perl_vendorarch}/auto/ModPerl/InterpPool
-%{perl_vendorarch}/auto/ModPerl/Interpreter
-%{perl_vendorarch}/auto/ModPerl/TiPool
-%{perl_vendorarch}/auto/ModPerl/TiPoolConfig
-%{perl_vendorarch}/auto/APR/BucketAlloc
-%{perl_vendorarch}/auto/APR/IpSubnet
-%{perl_vendorarch}/auto/APR/Util
-%{perl_vendorarch}/auto/APR/Pool
-%{perl_vendorarch}/auto/APR/Finfo
-%{perl_vendorarch}/auto/APR/Socket
-%{perl_vendorarch}/auto/APR/Brigade
-%{perl_vendorarch}/auto/APR/URI
-%{perl_vendorarch}/auto/APR/Error
-%{perl_vendorarch}/auto/APR/ThreadRWLock
-%{perl_vendorarch}/auto/APR/Bucket
-%{perl_vendorarch}/auto/APR/Const
-%{perl_vendorarch}/auto/APR/APR.so
-%{perl_vendorarch}/auto/APR/Status
-%{perl_vendorarch}/auto/APR/SockAddr
-%{perl_vendorarch}/auto/APR/String
-%{perl_vendorarch}/auto/APR/OS
-%{perl_vendorarch}/auto/APR/PerlIO
-%{perl_vendorarch}/auto/APR/ThreadMutex
-%{perl_vendorarch}/auto/APR/Date
-%{perl_vendorarch}/auto/APR/UUID
-%{perl_vendorarch}/auto/APR/BucketType
-%{perl_vendorarch}/auto/APR/Base64
-%{perl_vendorarch}/auto/APR/Table
-
+%{perl_vendorarch}/auto/Apache2
+%{perl_vendorarch}/auto/ModPerl
+%{perl_vendorarch}/auto/APR
 %{_mandir}/*/*
-%attr(0755,root,root) %{_var}/www/perl/*.pl
 
 %files devel
-%attr(0755,root,root) %{_bindir}/*
-%{_includedir}/apache/*
-
-
+%{_includedir}/httpd/*

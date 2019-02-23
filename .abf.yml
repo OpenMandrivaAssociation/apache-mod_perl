@@ -1,3 +1,5 @@
 sources:
   mod_perl-2.0.8-svn1590627.tar.xz: 93fb97db304c31629d2d2a70cb303de49d65d860
   mod_perl-2.0.8.tar.gz.asc: 332f75a0014a83a2081a947d72181dcf569639fe
+  mod_perl-2.0.10.tar.gz: 61b5b0fe4449440258ad45dee6efa0e2264a9701
+  mod_perl-2.0.10.tar.gz.asc: 66295e8b904f601dba4aea4db29b2232cd080678
