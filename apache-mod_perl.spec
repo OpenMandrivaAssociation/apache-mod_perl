@@ -51,6 +51,7 @@ BuildRequires: perl(Data::Flow)
 BuildRequires: perl-ExtUtils-Embed
 BuildRequires: perl-Test
 BuildRequires: apache >= %{apache_version}
+BuildRequires: gdbm-devel
 %if %{build_test}
 BuildRequires: perl-CGI >= 1:3.08
 BuildRequires: perl-HTML-Parser
