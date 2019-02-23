@@ -44,7 +44,6 @@ License:	Apache License
 URL:		http://perl.apache.org/
 Source0:	http://www.apache.org/dyn/closer.cgi/perl/%{mod_name}-%{version}.tar.gz
 Source1:	http://www.apache.org/dist/perl/%{mod_name}-%{version}.tar.gz.asc
-%endif
 Source2:	mod_perl.conf
 Source3:	apache-mod_perl-testscript.pl
 Patch0:		mod_perl-2.0.4-inline.patch
