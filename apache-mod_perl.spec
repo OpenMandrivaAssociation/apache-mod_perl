@@ -102,7 +102,7 @@ You can build %{name} with some conditional build swithes;
 %package	devel
 Summary:    Files needed for building XS modules that use mod_perl
 Group:      Development/C
-Requires:   %{name} = 1:%{version}
+Requires:   %{name} = 1:%{version}-%{release}
 Requires:   apache-devel >= %{apache_version}
 Epoch:      1
 
