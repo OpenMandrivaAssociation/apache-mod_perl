@@ -1,3 +1,9 @@
+%global __requires_exclude %{?__requires_exclude:%__requires_exclude|}perl\\(Apache::TestConfig\\)
+%global __requires_exclude %{?__requires_exclude:%__requires_exclude|}perl\\(Apache::TestReportPerl\\)
+%global __requires_exclude %{?__requires_exclude:%__requires_exclude|}perl\\(Apache::TestRunPerl\\)
+%global __requires_exclude %{?__requires_exclude:%__requires_exclude|}perl\\(Apache::TestTrace\\)
+
+
 #(ie. use with rpm --rebuild):
 #
 #	--with debug	Compile with debugging code
