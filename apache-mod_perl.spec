@@ -76,6 +76,7 @@ BuildRequires: apache-mod_ssl >= %{apache_version}
 BuildRequires: apache-mod_suexec >= %{apache_version}
 BuildRequires: apache-mod_userdir >= %{apache_version}
 %endif
+BuildRequires: locales-extra-charsets
 BuildRequires: apache-devel >= %{apache_version}
 Requires:   apache >= %{apache_version}
 Provides:   perl(mod_perl)
