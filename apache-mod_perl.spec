@@ -3,6 +3,7 @@
 %global __requires_exclude %{?__requires_exclude:%__requires_exclude|}perl\\(Apache::TestRunPerl\\)
 %global __requires_exclude %{?__requires_exclude:%__requires_exclude|}perl\\(Apache::TestTrace\\)
 
+%define debug_package %{nil}
 
 #(ie. use with rpm --rebuild):
 #
@@ -39,8 +40,8 @@
 %define mod_name mod_perl
 
 Name:       apache-%{mod_name}
-Version:    2.0.11
-Release:    2
+Version:    2.0.12
+Release:    1
 Summary:    An embedded Perl interpreter for the apache Web server
 Group:      System/Servers
 License:    Apache License
@@ -50,7 +51,6 @@ Source1:    http://www-eu.apache.org/dist/perl/%{mod_name}-%{version}.tar.gz.asc
 Source2:    perl.conf
 Source3:    perl.module.conf
 Patch0:     mod_perl-2.0.4-inline.patch
-Patch1:     mod_perl-2.0.11-fix_building_with_perl-5.33.7.patch
 BuildRequires: perl-devel >= 5.8.2
 BuildRequires: perl(Tie::IxHash)
 BuildRequires: perl(Data::Flow)
