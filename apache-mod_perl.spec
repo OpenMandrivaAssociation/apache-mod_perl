@@ -41,7 +41,7 @@
 
 Name:       apache-%{mod_name}
 Version:    2.0.12
-Release:    2
+Release:    3
 Summary:    An embedded Perl interpreter for the apache Web server
 Group:      System/Servers
 License:    Apache License
