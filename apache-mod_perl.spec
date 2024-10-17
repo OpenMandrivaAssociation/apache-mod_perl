@@ -45,7 +45,7 @@ Release:    3
 Summary:    An embedded Perl interpreter for the apache Web server
 Group:      System/Servers
 License:    Apache License
-Url:        http://perl.apache.org/
+Url:        https://perl.apache.org/
 Source0:    http://www-eu.apache.org/dist/perl/%{mod_name}-%{version}.tar.gz
 Source1:    http://www-eu.apache.org/dist/perl/%{mod_name}-%{version}.tar.gz.asc
 Source2:    perl.conf
