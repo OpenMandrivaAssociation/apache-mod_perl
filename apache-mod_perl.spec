@@ -36,18 +36,18 @@
 %define build_debug 1
 %endif
 
-%define apache_version 2.4.37
+%define apache_version 2.4.62
 %define mod_name mod_perl
 
 Name:       apache-%{mod_name}
-Version:    2.0.12
-Release:    3
+Version:    2.0.13
+Release:    1
 Summary:    An embedded Perl interpreter for the apache Web server
 Group:      System/Servers
 License:    Apache License
 Url:        https://perl.apache.org/
-Source0:    http://www-eu.apache.org/dist/perl/%{mod_name}-%{version}.tar.gz
-Source1:    http://www-eu.apache.org/dist/perl/%{mod_name}-%{version}.tar.gz.asc
+Source0:    https://dlcdn.apache.org/perl/mod_perl-%{version}.tar.gz
+Source1:    https://dlcdn.apache.org/perl/mod_perl-%{version}.tar.gz.sha512
 Source2:    perl.conf
 Source3:    perl.module.conf
 Patch0:     mod_perl-2.0.4-inline.patch
