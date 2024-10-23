@@ -59,6 +59,7 @@ BuildRequires: perl-Test
 BuildRequires: apache >= %{apache_version}
 BuildRequires: gdbm-devel
 BuildRequires: pkgconfig(uuid)
+BuildRequires: pkgconfig(ldap)
 %if %{build_test}
 BuildRequires: perl-CGI >= 1:3.08
 BuildRequires: perl-HTML-Parser
