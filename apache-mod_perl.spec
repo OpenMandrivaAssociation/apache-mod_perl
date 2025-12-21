@@ -51,6 +51,7 @@ Source1:    https://dlcdn.apache.org/perl/mod_perl-%{version}.tar.gz.sha512
 Source2:    perl.conf
 Source3:    perl.module.conf
 Patch0:     mod_perl-2.0.4-inline.patch
+BuildRequires:	make
 BuildRequires: perl-devel >= 5.8.2
 BuildRequires: perl(Tie::IxHash)
 BuildRequires: perl(Data::Flow)
