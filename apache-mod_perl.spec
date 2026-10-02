@@ -36,12 +36,12 @@
 %define build_debug 1
 %endif
 
-%define apache_version 2.4.62
+%define apache_version 2.4.69
 %define mod_name mod_perl
 
 Name:       apache-%{mod_name}
 Version:    2.0.13
-Release:	3
+Release:	4
 Summary:    An embedded Perl interpreter for the apache Web server
 Group:      System/Servers
 License:    Apache License
